@@ -1,6 +1,6 @@
 name: publish
 
-# Every 30 minutes: send queued posts whose slot has come to the creator's TikTok inbox.
+# Every 30 minutes: publish queued posts whose slot has come (Instagram directly, TikTok to the inbox).
 # GitHub may start scheduled runs some minutes late; that is fine for an inbox delivery.
 on:
   schedule:
@@ -21,7 +21,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -34,12 +34,8 @@ jobs:
 
       - name: Send due posts
         env:
-          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
-          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
-          TIKTOK_REFRESH_TOKEN: ${{ secrets.TIKTOK_REFRESH_TOKEN }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          GH_TOKEN: ${{ secrets.GH_PAT }}  # lets the script save a rotated TikTok refresh token
+          # every repo secret, so a new account only needs its secrets (see publish.py)
+          SECRETS_JSON: ${{ toJSON(secrets) }}
           REPO: ${{ github.repository }}
           PAGES_URL: ${{ vars.PAGES_URL }}
           FORCE_ITEM: ${{ github.event.inputs.item }}

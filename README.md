@@ -1,6 +1,6 @@
 # publish-queue
 
-Sends approved posts to the TikTok inbox on schedule, without the laptop being on.
+Publishes approved posts on schedule without the laptop being on: Instagram directly, TikTok to the inbox.
 
 ```
 laptop (theblueprint-mag)                       GitHub (this repo)                         TikTok
@@ -14,6 +14,32 @@ approve in review app  --push gh-pages-->  Pages serves q/<id>/*.jpg + item.json
 - Mode is TikTok `MEDIA_UPLOAD` (inbox): no TikTok audit needed. Direct Post would need one.
 - Limits: TikTok allows at most 5 pending inbox uploads per 24 h; a slot missed by more than 12 h
   is skipped (and you get a Telegram message); GitHub may start scheduled runs a few minutes late.
+
+## Accounts
+
+| Account | Writes to the queue from | Instagram | TikTok (inbox) |
+|---|---|---|---|
+| `fashion` (@theblueprint.mag) | theblueprint-mag review app (Schedule) | - | `TIKTOK_REFRESH_TOKEN` |
+| `running` (@running.shadows / @running_shadows) | `pnpm rs queue posts/<slug>/post.json` | `INSTAGRAM_TOKEN_RUNNING` | `TIKTOK_REFRESH_TOKEN_RUNNING` |
+
+Both write into the same local folder, `C:\Users\simon\publish-queue\site` (ignored by this repo; it is the
+gh-pages branch). Instagram is published directly at the slot; TikTok lands in the inbox. A new account only
+needs its secrets: the workflow hands every repo secret to `publish.py` (`SECRETS_JSON`).
+
+### Add Instagram for an account (once, ~15 min)
+The account must be a professional account (Creator recommended).
+1. developers.facebook.com > My Apps > Create app. Use case: **Manage messaging & content on Instagram**.
+2. Use cases > Customize > **API setup with Instagram login**. Permissions: `instagram_business_basic`,
+   `instagram_business_content_publish`.
+3. Add the Instagram account (it may ask you to accept a tester invite in Instagram: Settings > Website
+   permissions > Apps and websites > Tester invites), then **Generate token** next to it.
+4. `gh secret set INSTAGRAM_TOKEN_RUNNING -R simlirette/publish-queue` and paste the token
+   (`INSTAGRAM_TOKEN_FASHION` for @theblueprint.mag later).
+The token lasts 60 days; the Action refreshes it on every run with a due post and stores the new one (GH_PAT).
+
+### Add a second TikTok account
+1. TikTok developer portal > the `publish-queue` app > Sandbox > Target users: add the account.
+2. In theblueprint-mag: `uv run carousel tiktok auth --account running`, signing in with that account.
 
 ## One-time setup (about 30 minutes)
 

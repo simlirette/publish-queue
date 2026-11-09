@@ -3,7 +3,7 @@
 Sends approved posts to the TikTok inbox on schedule, without the laptop being on.
 
 ```
-laptop (media-agent)                       GitHub (this repo)                         TikTok
+laptop (theblueprint-mag)                       GitHub (this repo)                         TikTok
 approve in review app  --push gh-pages-->  Pages serves q/<id>/*.jpg + item.json
                                            Action every 30 min: slot reached? --->   inbox notification
                                            state/sent.json records what went out     you pick a sound, post
@@ -23,11 +23,11 @@ approve in review app  --push gh-pages-->  Pages serves q/<id>/*.jpg + item.json
    ```powershell
    cd $HOME
    git clone https://github.com/simlirette/publish-queue.git
-   Copy-Item media-agent\deploy\publish-queue\publish.py, media-agent\deploy\publish-queue\README.md publish-queue\
-   Copy-Item -Recurse media-agent\deploy\publish-queue\.github, media-agent\deploy\publish-queue\state publish-queue\
+   Copy-Item theblueprint-mag\deploy\publish-queue\publish.py, theblueprint-mag\deploy\publish-queue\README.md publish-queue\
+   Copy-Item -Recurse theblueprint-mag\deploy\publish-queue\.github, theblueprint-mag\deploy\publish-queue\state publish-queue\
    cd publish-queue; git add -A; git commit -m "Publishing workflow"; git push
    ```
-3. In media-agent, `config/app.yaml` > `publish`: `repo_url` and `pages_url` are already filled in.
+3. In theblueprint-mag, `config/app.yaml` > `publish`: `repo_url` and `pages_url` are already filled in.
    Run `uv run carousel queue init` (creates `data/publish-site/` and pushes gh-pages).
 4. Repo > Settings > Pages > Build and deployment: **Deploy from a branch**, `gh-pages`, `/ (root)`.
    After a minute, https://simlirette.github.io/publish-queue/callback.html must open.
@@ -38,9 +38,9 @@ approve in review app  --push gh-pages-->  Pages serves q/<id>/*.jpg + item.json
 3. Scopes: `user.info.basic`, `video.upload`. Direct Post is not needed.
 4. Create a **Sandbox** and add the TikTok account you post to as a target user.
 5. **URL properties** > verify by **URL prefix**: `https://simlirette.github.io/publish-queue/`.
-   Download the signature file, put it in `media-agent\data\publish-site\`, run
+   Download the signature file, put it in `theblueprint-mag\data\publish-site\`, run
    `uv run carousel queue push`, wait a minute, then click Verify.
-6. Copy the client key and secret into media-agent `.env` (`TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`).
+6. Copy the client key and secret into theblueprint-mag `.env` (`TIKTOK_CLIENT_KEY`, `TIKTOK_CLIENT_SECRET`).
 
 ### 3. Secrets
 1. Install the GitHub CLI once: `winget install GitHub.cli`, then `gh auth login`.
@@ -48,12 +48,12 @@ approve in review app  --push gh-pages-->  Pages serves q/<id>/*.jpg + item.json
    **Secrets: read and write**, then `gh secret set GH_PAT -R simlirette/publish-queue` and paste it.
    It lets the Action save TikTok's refresh token when TikTok rotates it.
 3. Optional Telegram pings: `gh secret set TELEGRAM_BOT_TOKEN -R simlirette/publish-queue` and
-   `TELEGRAM_CHAT_ID` (same values as in media-agent `.env`).
-4. `uv run carousel tiktok auth` (in media-agent): signs in to TikTok and sets `TIKTOK_CLIENT_KEY`,
+   `TELEGRAM_CHAT_ID` (same values as in theblueprint-mag `.env`).
+4. `uv run carousel tiktok auth` (in theblueprint-mag): signs in to TikTok and sets `TIKTOK_CLIENT_KEY`,
    `TIKTOK_CLIENT_SECRET`, `TIKTOK_REFRESH_TOKEN` and the `PAGES_URL` variable.
 
 ### 4. Test, then switch on
-1. Set `publish.mode: queue` in media-agent `config/app.yaml`.
+1. Set `publish.mode: queue` in theblueprint-mag `config/app.yaml`.
 2. Schedule one approved post in the review app. `uv run carousel queue status` shows its id.
 3. Repo > Actions > publish > **Run workflow**, item = that id. A TikTok inbox notification should arrive.
 4. From then on the Action sends each post at its slot. Mark it posted in the review app as before.

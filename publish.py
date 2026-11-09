@@ -2,7 +2,7 @@
 """Send queued posts whose slot has come to the creator's TikTok inbox. Standard library only.
 
 Reads the queue from the gh-pages checkout (`--site`): q/<id>/item.json + slides, written by the
-laptop (media-agent `QueuePublisher`). TikTok pulls the slides from GitHub Pages, so PAGES_URL
+laptop (theblueprint-mag `QueuePublisher`). TikTok pulls the slides from GitHub Pages, so PAGES_URL
 must be the URL prefix verified in the TikTok developer portal.
 
 Mode is MEDIA_UPLOAD: the post lands in the TikTok inbox and the creator picks a sound and posts.

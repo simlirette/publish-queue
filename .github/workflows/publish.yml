@@ -1,0 +1,54 @@
+name: publish
+
+# Every 30 minutes: send queued posts whose slot has come to the creator's TikTok inbox.
+# GitHub may start scheduled runs some minutes late; that is fine for an inbox delivery.
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+    inputs:
+      item:
+        description: "Send this item id now, ignoring its slot (e.g. fashion-0034)"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check out the queue (gh-pages)
+        uses: actions/checkout@v4
+        continue-on-error: true  # no gh-pages yet before the first push from the laptop
+        with:
+          ref: gh-pages
+          path: site
+
+      - name: Send due posts
+        env:
+          TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+          TIKTOK_REFRESH_TOKEN: ${{ secrets.TIKTOK_REFRESH_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}  # lets the script save a rotated TikTok refresh token
+          REPO: ${{ github.repository }}
+          PAGES_URL: ${{ vars.PAGES_URL }}
+          FORCE_ITEM: ${{ github.event.inputs.item }}
+        run: python3 publish.py --site site --state state/sent.json
+
+      - name: Save what was sent
+        if: always()
+        run: |
+          git config user.name "publish-bot"
+          git config user.email "publish-bot@users.noreply.github.com"
+          git add state
+          git diff --cached --quiet || { git commit -m "sent state" && git push; }

@@ -1,0 +1,33 @@
+{
+  "id": "running-easy-runs",
+  "account": "running",
+  "slug": "easy-runs",
+  "format": "carousel",
+  "platforms": [
+    "tiktok"
+  ],
+  "slot": "2026-11-10T07:00",
+  "timezone": "America/Toronto",
+  "description": "Easy days build the engine. Hard days test it. Don't flip the two.\n\nFour mistakes that turn easy runs into grey-zone running, and the fix for each.\n\nSave this for your next easy run, and follow for more training explained.\n\n#easyrun #zone2running #runningstrides #8020running #aerobicbase",
+  "queued_at": "2026-11-09T19:05:24+00:00",
+  "kind": "photo",
+  "images": [
+    "q/running-easy-runs/01.jpg",
+    "q/running-easy-runs/02.jpg",
+    "q/running-easy-runs/03.jpg",
+    "q/running-easy-runs/04.jpg",
+    "q/running-easy-runs/05.jpg",
+    "q/running-easy-runs/06.jpg",
+    "q/running-easy-runs/07.jpg"
+  ],
+  "cover_index": 0,
+  "alt_texts": [
+    "Slide 1/7: Your easy runs are making you slower.",
+    "Slide 2/7: Mistake 1 of 4. | You run them too fast. | Easy means conversational. If you can’t talk in full sentences, you’re not going easy. | Fix: Run 60–90 s/km slower than your 5K pace.",
+    "Slide 3/7: Mistake 2 of 4. | No real rest between hard days. | Hard sessions stacked on “easy” days that aren’t easy. The engine never rebuilds. | Fix: After every hard session, go truly easy or take the day off.",
+    "Slide 4/7: Mistake 3 of 4. | Same route, same pace, every time. | Your body adapts to routine. No new stimulus, no new fitness. | Fix: Vary the terrain. Add hills. Throw in strides.",
+    "Slide 5/7: Mistake 4 of 4. | You skip strides. | The cheapest speed work in running. 20 seconds, no track, no watch. | Fix: 4–6 × 20 s strides after one or two easy runs a week.",
+    "Slide 6/7: Easy days build the engine. Hard days test it. | Don’t flip the two.",
+    "Slide 7/7: Save this for your next easy run."
+  ]
+}

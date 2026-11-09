@@ -1,0 +1,22 @@
+{
+  "id": "fashion-0010",
+  "account": "fashion",
+  "platform": "tiktok",
+  "kind": "photo",
+  "post_id": 10,
+  "slot": "2026-11-11T17:30-05:00",
+  "description": "Cotton is not just a summer fabric.\nCorduroy, flannel and heavy denim carry the cold months.\n\n#blueprint #menswear #cotton #winterstyle #mensfashion",
+  "images": [
+    "q/fashion-0010/01.jpg",
+    "q/fashion-0010/02.jpg",
+    "q/fashion-0010/03.jpg",
+    "q/fashion-0010/04.jpg",
+    "q/fashion-0010/05.jpg",
+    "q/fashion-0010/06.jpg",
+    "q/fashion-0010/07.jpg",
+    "q/fashion-0010/08.jpg"
+  ],
+  "cover_index": 0,
+  "sound_hint": "",
+  "queued_at": "2026-11-11T09:02:25-05:00"
+}

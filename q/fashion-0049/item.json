@@ -1,0 +1,22 @@
+{
+  "id": "fashion-0049",
+  "account": "fashion",
+  "platform": "tiktok",
+  "kind": "photo",
+  "post_id": 49,
+  "slot": "2026-11-15T17:30-05:00",
+  "description": "From houndstooth blazers to wool truckers, these make cold-weather dressing easy.\nWhich one would you wear?\n\n#blueprint #menswear #winterstyle",
+  "images": [
+    "q/fashion-0049/01.jpg",
+    "q/fashion-0049/02.jpg",
+    "q/fashion-0049/03.jpg",
+    "q/fashion-0049/04.jpg",
+    "q/fashion-0049/05.jpg",
+    "q/fashion-0049/06.jpg",
+    "q/fashion-0049/07.jpg",
+    "q/fashion-0049/08.jpg"
+  ],
+  "cover_index": 0,
+  "sound_hint": "",
+  "queued_at": "2026-11-11T09:02:25-05:00"
+}

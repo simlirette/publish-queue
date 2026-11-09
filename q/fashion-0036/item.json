@@ -1,0 +1,21 @@
+{
+  "id": "fashion-0036",
+  "account": "fashion",
+  "platform": "tiktok",
+  "kind": "photo",
+  "post_id": 36,
+  "slot": "2026-11-12T09:30-05:00",
+  "description": "A steady colour for cold-weather outfits, from casual denim to tailored layers.\n\n#blueprint #menswear #winterstyle #navyfits",
+  "images": [
+    "q/fashion-0036/01.jpg",
+    "q/fashion-0036/02.jpg",
+    "q/fashion-0036/03.jpg",
+    "q/fashion-0036/04.jpg",
+    "q/fashion-0036/05.jpg",
+    "q/fashion-0036/06.jpg",
+    "q/fashion-0036/07.jpg"
+  ],
+  "cover_index": 0,
+  "sound_hint": "",
+  "queued_at": "2026-11-11T09:02:25-05:00"
+}

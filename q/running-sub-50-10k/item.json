@@ -1,0 +1,16 @@
+{
+  "id": "running-sub-50-10k",
+  "account": "running",
+  "slug": "sub-50-10k",
+  "format": "reel",
+  "platforms": [
+    "tiktok"
+  ],
+  "slot": "2026-11-11T07:00",
+  "timezone": "America/Toronto",
+  "description": "Sub-50 10K means 5:00/km on average, but running it evenly is not the only way to get there.\n\nStart a little slower (5:05/km for three kilometres), lock into 4:59/km through km 8, then finish at 4:52/km. You cross the line in 49:54 with the hard part saved for when it counts.\n\nCheck your watch at 3, 5 and 8 km: being 10 to 15 seconds behind even pace is part of the plan.\n\nSave it for race day.\n\n#sub5010k #10ktraining #negativesplit #racepacing #10krace",
+  "queued_at": "2026-11-09T20:20:50+00:00",
+  "kind": "video",
+  "video": "q/running-sub-50-10k/reel.mp4",
+  "cover": "q/running-sub-50-10k/cover.jpg"
+}

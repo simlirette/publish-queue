@@ -1,0 +1,14 @@
+{
+  "id": "fashion-v0020",
+  "account": "fashion",
+  "platforms": [
+    "tiktok"
+  ],
+  "kind": "video",
+  "format": "video_carousel",
+  "rendition_id": 20,
+  "slot": "2026-11-14T13:30-05:00",
+  "video": "q/fashion-v0020/video.mp4",
+  "description": "what i'd wear this fall\n\n#blueprint #menswear #fallstyle #outfitideas #mensfashion",
+  "queued_at": "2026-11-11T08:52:28-05:00"
+}

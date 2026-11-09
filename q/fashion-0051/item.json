@@ -1,0 +1,20 @@
+{
+  "id": "fashion-0051",
+  "account": "fashion",
+  "platform": "tiktok",
+  "kind": "photo",
+  "post_id": 51,
+  "slot": "2026-11-16T09:30-05:00",
+  "description": "Light layers and relaxed denim work well when the weather shifts. Each outfit keeps the pieces easy to mix and match.\n\n#blueprint #menswear #transitionalstyle #falloutfits",
+  "images": [
+    "q/fashion-0051/01.jpg",
+    "q/fashion-0051/02.jpg",
+    "q/fashion-0051/03.jpg",
+    "q/fashion-0051/04.jpg",
+    "q/fashion-0051/05.jpg",
+    "q/fashion-0051/06.jpg"
+  ],
+  "cover_index": 0,
+  "sound_hint": "",
+  "queued_at": "2026-11-11T09:02:25-05:00"
+}

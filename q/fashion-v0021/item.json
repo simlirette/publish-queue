@@ -1,0 +1,14 @@
+{
+  "id": "fashion-v0021",
+  "account": "fashion",
+  "platforms": [
+    "tiktok"
+  ],
+  "kind": "video",
+  "format": "video_carousel",
+  "rendition_id": 21,
+  "slot": "2026-11-15T13:30-05:00",
+  "video": "q/fashion-v0021/video.mp4",
+  "description": "fall outfits for men\n\n#blueprint #menswear #cottonjacket #transitionalstyle #mensfashion",
+  "queued_at": "2026-11-11T08:52:47-05:00"
+}

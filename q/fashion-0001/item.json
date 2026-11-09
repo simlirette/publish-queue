@@ -1,0 +1,20 @@
+{
+  "id": "fashion-0001",
+  "account": "fashion",
+  "platform": "tiktok",
+  "kind": "photo",
+  "post_id": 1,
+  "slot": "2026-11-11T09:30-05:00",
+  "description": "The in-between stretch where one layer is enough.\nPlaid, knitwear and denim carry the whole week.\n\n#blueprint #menswear #mensfashion #falloutfits #springstyle",
+  "images": [
+    "q/fashion-0001/01.jpg",
+    "q/fashion-0001/02.jpg",
+    "q/fashion-0001/03.jpg",
+    "q/fashion-0001/04.jpg",
+    "q/fashion-0001/05.jpg",
+    "q/fashion-0001/06.jpg"
+  ],
+  "cover_index": 0,
+  "sound_hint": "",
+  "queued_at": "2026-11-11T09:02:24-05:00"
+}

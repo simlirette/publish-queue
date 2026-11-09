@@ -1,0 +1,20 @@
+{
+  "id": "fashion-0067",
+  "account": "fashion",
+  "platform": "tiktok",
+  "kind": "photo",
+  "post_id": 67,
+  "slot": "2026-11-25T09:30-05:00",
+  "description": "Leather, steel and suede add texture to a simple wardrobe.\n\n#blueprint #menswear #nicheaesthetic #moodboard",
+  "images": [
+    "q/fashion-0067/01.jpg",
+    "q/fashion-0067/02.jpg",
+    "q/fashion-0067/03.jpg",
+    "q/fashion-0067/04.jpg",
+    "q/fashion-0067/05.jpg",
+    "q/fashion-0067/06.jpg"
+  ],
+  "cover_index": 0,
+  "sound_hint": "",
+  "queued_at": "2026-11-24T14:47:10-05:00"
+}

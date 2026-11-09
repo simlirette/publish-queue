@@ -1,0 +1,21 @@
+{
+  "id": "fashion-0061",
+  "account": "fashion",
+  "platform": "tiktok",
+  "kind": "photo",
+  "post_id": 61,
+  "slot": "2026-11-29T09:30-05:00",
+  "description": "Field jackets, knits and denim make easy outfits for changing weather. Which fit would you wear?\n\n#blueprint #menswear #mensstyle #betweenseasons",
+  "images": [
+    "q/fashion-0061/01.jpg",
+    "q/fashion-0061/02.jpg",
+    "q/fashion-0061/03.jpg",
+    "q/fashion-0061/04.jpg",
+    "q/fashion-0061/05.jpg",
+    "q/fashion-0061/06.jpg",
+    "q/fashion-0061/07.jpg"
+  ],
+  "cover_index": 0,
+  "sound_hint": "",
+  "queued_at": "2026-11-24T14:47:13-05:00"
+}

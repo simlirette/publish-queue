@@ -1,0 +1,22 @@
+{
+  "id": "fashion-0068",
+  "account": "fashion",
+  "platform": "tiktok",
+  "kind": "photo",
+  "post_id": 68,
+  "slot": "2026-11-26T09:30-05:00",
+  "description": "Classic pieces with a practical edge.\n\n#blueprint #menswear #nicheaesthetic #moodboard",
+  "images": [
+    "q/fashion-0068/01.jpg",
+    "q/fashion-0068/02.jpg",
+    "q/fashion-0068/03.jpg",
+    "q/fashion-0068/04.jpg",
+    "q/fashion-0068/05.jpg",
+    "q/fashion-0068/06.jpg",
+    "q/fashion-0068/07.jpg",
+    "q/fashion-0068/08.jpg"
+  ],
+  "cover_index": 0,
+  "sound_hint": "",
+  "queued_at": "2026-11-24T14:47:11-05:00"
+}

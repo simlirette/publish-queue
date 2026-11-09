@@ -1,0 +1,14 @@
+{
+  "id": "fashion-v0029",
+  "account": "fashion",
+  "platforms": [
+    "tiktok"
+  ],
+  "kind": "video",
+  "format": "video_carousel",
+  "rendition_id": 29,
+  "slot": "2026-11-30T13:30-05:00",
+  "video": "q/fashion-v0029/video.mp4",
+  "description": "winter outfits for men\n\n#blueprint #menswear #knitwear #winterstyle #mensfashion",
+  "queued_at": "2026-11-24T14:22:30-05:00"
+}

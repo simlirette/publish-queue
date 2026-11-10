@@ -20,6 +20,10 @@ Credentials (repo secrets; the workflow passes them all as SECRETS_JSON):
 State (`--state`, committed on main) records every platform delivery that was sent, failed or
 skipped, keyed "<id>:<platform>", so nothing is sent twice. A delivery that cannot happen yet
 (Pages not deployed, a platform limit) is tried again on the next run.
+
+Analytics: once a day, every TikTok account with a token gets its own posts listed (scope
+video.list) into state/analytics/<account>.json: views, likes, comments and shares per post, plus
+the views of each day, so the content pipelines can learn which posts worked.
 """
 
 from __future__ import annotations
@@ -45,6 +49,10 @@ TIKTOK_WAIT_S = 90
 IG_WAIT_S = 300  # Reels can take a few minutes to process
 INIT_GAP_S = 11  # TikTok allows six init requests per minute per token
 KEEP_STATE_DAYS = 60
+STATS_EVERY_H = 20  # one analytics pass a day
+STATS_KEEP_DAYS = 120  # posts older than this leave the analytics file
+STATS_FIELDS = ("id", "create_time", "title", "video_description", "duration", "view_count", "like_count",
+                "comment_count", "share_count", "share_url")
 TIKTOK_RETRY = {
     "spam_risk_too_many_pending_share", "spam_risk_too_many_posts", "rate_limit_exceeded",
     "internal_error", "url_ownership_unverified", "access_token_invalid", "reached_active_user_cap",
@@ -353,6 +361,68 @@ def ig_send(item: dict, token: str, urls: dict) -> str:
     return f"published {media} on @{user.get('username', '?')}"
 
 
+# ---------------------------------------------------------------------------- analytics (TikTok)
+
+
+def tiktok_accounts() -> list[str]:
+    """Every account that has a TikTok refresh token: "fashion" plus TIKTOK_REFRESH_TOKEN_<ACCOUNT>."""
+    accounts = ["fashion"] if secret("TIKTOK_REFRESH_TOKEN") else []
+    prefix = "TIKTOK_REFRESH_TOKEN_"
+    names = set(SECRETS) | {k for k in os.environ if k.startswith(prefix)}
+    accounts += sorted(n[len(prefix):].lower() for n in names if n.startswith(prefix) and secret(n))
+    return accounts
+
+
+def merge_stats(data: dict, videos: list[dict], now: datetime) -> dict:
+    """Latest numbers per post, plus its views on each day (for growth curves)."""
+    stamp, day = now.isoformat(timespec="seconds"), now.date().isoformat()
+    posts = data.setdefault("posts", {})
+    for v in videos:
+        p = posts.setdefault(str(v["id"]), {"first_seen": stamp})
+        p.update({k: v.get(k) for k in STATS_FIELDS if k != "id"}, updated_at=stamp)
+        if v.get("view_count") is not None:
+            p.setdefault("views_by_day", {})[day] = v["view_count"]
+    cutoff = (now - timedelta(days=STATS_KEEP_DAYS)).timestamp()
+    data["posts"] = {k: p for k, p in posts.items() if (p.get("create_time") or cutoff) >= cutoff}
+    return data
+
+
+def collect_stats(stats_dir: Path, now: datetime, tokens: dict) -> list[str]:
+    notes = []
+    for account in tiktok_accounts():
+        path = stats_dir / f"{account}.json"
+        data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+        last = data.get("fetched_at")
+        if last and now - datetime.fromisoformat(last) < timedelta(hours=STATS_EVERY_H):
+            continue
+        data["fetched_at"] = now.isoformat(timespec="seconds")
+        data.pop("last_error", None)
+        try:
+            if ("tiktok", account) not in tokens:
+                tokens[("tiktok", account)] = tiktok_access_token(account)
+            auth = {"Authorization": f"Bearer {tokens[('tiktok', account)]}"}
+            videos, cursor = [], None
+            for _ in range(10):  # 200 posts at most
+                body = {"max_count": 20, **({"cursor": cursor} if cursor else {})}
+                _, j = http("POST", f"{TIKTOK}/v2/video/list/?fields={','.join(STATS_FIELDS)}", body, headers=auth)
+                err = j.get("error") or {}
+                if err.get("code") != "ok":
+                    raise Retry(f"{err.get('code')}: {err.get('message', '')}")
+                d = j.get("data") or {}
+                videos += d.get("videos") or []
+                if not d.get("has_more"):
+                    break
+                cursor = d.get("cursor")
+            merge_stats(data, videos, now)
+            notes.append(f"analytics {account}: {len(videos)} posts")
+        except (Retry, Failed) as exc:
+            data["last_error"] = str(exc)
+            notes.append(f"analytics {account}: not collected - {exc}")
+        stats_dir.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(data, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+    return notes
+
+
 # ---------------------------------------------------------------------------- main
 
 
@@ -395,12 +465,12 @@ def main() -> int:
         notify(f"Skipped {it['id']} on {platform}: its slot passed more than {LATE_HOURS} h before it could be sent.")
 
     failures = 0
+    tokens: dict = {}
     pages_url = os.environ.get("PAGES_URL") or secret("PAGES_URL")
     if due and not pages_url:
         print(f"{len(due)} delivery(ies) due but PAGES_URL is not set")
         failures = 1
     elif due:
-        tokens: dict = {}
         tiktok_calls = 0
         for it, platform in due:
             if platform == "tiktok":
@@ -423,6 +493,9 @@ def main() -> int:
             notify(message(it, platform))
     else:
         print("nothing due")
+
+    for note in collect_stats(args.state.parent / "analytics", now, tokens):
+        print(note)
 
     args.state.parent.mkdir(parents=True, exist_ok=True)
     args.state.write_text(json.dumps(trim_state(sent, now), indent=2, sort_keys=True) + "\n", encoding="utf-8")

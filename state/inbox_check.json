@@ -9,33 +9,15 @@
       "open_id": "-000VaQHDI7OjSPW8ae4jF_ovPLH_WZG1Npk"
     }
   },
-  "checked": "2026-11-12T22:53:49+00:00",
+  "checked": "2026-11-12T23:08:59+00:00",
   "sends": {
-    "fashion-0001:tiktok": {
-      "data": null,
-      "error": {
-        "code": "invalid_params",
-        "log_id": "20261113065352C7DCD6C9183E13159E68",
-        "message": "token_not_authorized_for_specified_publish_id"
-      },
-      "sent": "2026-11-11T22:59:13+00:00"
-    },
-    "fashion-0010:tiktok": {
-      "data": null,
-      "error": {
-        "code": "invalid_params",
-        "log_id": "20261113065353C91C001F8DAAAA17A579",
-        "message": "token_not_authorized_for_specified_publish_id"
-      },
-      "sent": "2026-11-11T22:59:13+00:00"
-    },
     "fashion-0036:tiktok": {
       "data": {
         "status": "SEND_TO_USER_INBOX"
       },
       "error": {
         "code": "ok",
-        "log_id": "2026111306535355D013AB53855715CDD2",
+        "log_id": "202611130709026622817EF041CE11FCC6",
         "message": ""
       },
       "sent": "2026-11-12T16:22:50+00:00"
@@ -46,7 +28,7 @@
       },
       "error": {
         "code": "ok",
-        "log_id": "202611130653548102B178D5AD5FED7E64",
+        "log_id": "202611130709028114DCC9355E55F1925B",
         "message": ""
       },
       "sent": "2026-11-12T21:43:01+00:00"
@@ -57,7 +39,7 @@
       },
       "error": {
         "code": "ok",
-        "log_id": "202611130653558102B178D5AD5FED7E7D",
+        "log_id": "202611130709036A11A0BF089D011DB207",
         "message": ""
       },
       "sent": "2026-11-12T16:27:31+00:00"
@@ -66,7 +48,7 @@
       "data": null,
       "error": {
         "code": "invalid_params",
-        "log_id": "202611130653558102B178D5AD5FED7EA3",
+        "log_id": "202611130709038114DCC9355E55F19285",
         "message": "token_not_authorized_for_specified_publish_id"
       },
       "sent": "2026-11-12T03:46:22+00:00"
@@ -77,7 +59,7 @@
       },
       "error": {
         "code": "ok",
-        "log_id": "20261113065356DD2F1E4412C511F1A872",
+        "log_id": "202611130709036A11A0BF089D011DB243",
         "message": ""
       },
       "sent": "2026-11-12T20:52:16+00:00"

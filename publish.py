@@ -236,6 +236,8 @@ def tiktok_access_token(account: str) -> str:
     _, j = http("POST", f"{TIKTOK}/v2/oauth/token/", {
         "client_key": ck, "client_secret": cs, "grant_type": "refresh_token", "refresh_token": old,
     }, form=True)
+    if os.environ.get("STATUS_IDS"):
+        print(f"token {account}: scope={j.get('scope')} expires_in={j.get('expires_in')}")
     if "access_token" not in j:
         raise Retry(f"TikTok token refresh failed for {account}: {j.get('error')} {j.get('error_description')}")
     new = j.get("refresh_token")

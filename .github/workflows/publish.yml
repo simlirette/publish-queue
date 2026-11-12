@@ -1,10 +1,15 @@
 name: publish
 
-# Every 30 minutes: publish queued posts whose slot has come (Instagram directly, TikTok to the inbox).
-# GitHub may start scheduled runs some minutes late; that is fine for an inbox delivery.
+# Publishes queued posts whose slot has come (Instagram directly, TikTok to the inbox).
+#
+# GitHub's cron is not a clock: on this repo "every 30 minutes" ran every 4-9 hours (2026-11-11/12),
+# so posts reached the inbox hours late or not at all. So each run stays up for ~5h40m, checking every
+# 5 minutes, then starts the next run itself (workflow_dispatch with the built-in token is allowed and
+# free on a public repo). The cron only restarts the chain if it ever breaks; the concurrency group
+# keeps a single run going and at most one waiting.
 on:
   schedule:
-    - cron: "7,37 * * * *"
+    - cron: "7 */3 * * *"
   workflow_dispatch:
     inputs:
       status_ids:
@@ -16,6 +21,7 @@ on:
 
 permissions:
   contents: write
+  actions: write  # to start the next run
 
 concurrency:
   group: publish
@@ -24,7 +30,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@v4
 
@@ -35,8 +41,8 @@ jobs:
           ref: gh-pages
           path: site
 
-      - name: Send due posts
-        timeout-minutes: 15
+      - name: Send due posts every 5 minutes
+        timeout-minutes: 345
         env:
           # every repo secret, so a new account only needs its secrets (see publish.py)
           SECRETS_JSON: ${{ toJSON(secrets) }}
@@ -44,15 +50,29 @@ jobs:
           PAGES_URL: ${{ vars.PAGES_URL }}
           FORCE_ITEM: ${{ github.event.inputs.item }}
           STATUS_IDS: ${{ github.event.inputs.status_ids }}
-        run: python3 publish.py --site site --state state/sent.json
-
-      - name: Save what was sent
-        if: always()
-        timeout-minutes: 5  # a hang here loses the state and re-sends posts (seen 2026-11-11)
-        env:
           GIT_TERMINAL_PROMPT: "0"
+          LOOP_SECONDS: "20400"
         run: |
           git config user.name "publish-bot"
           git config user.email "publish-bot@users.noreply.github.com"
-          git add state
-          git diff --cached --quiet || { git commit -m "sent state" && { git pull --rebase -X theirs origin main || true; timeout 120 git push; }; }
+          end=$(( $(date +%s) + LOOP_SECONDS ))
+          while :; do
+            # pick up new queue items (the laptop force-pushes gh-pages) and any state/code changes
+            git -C site fetch --quiet --depth 1 origin gh-pages && git -C site reset --quiet --hard FETCH_HEAD || echo "gh-pages fetch failed"
+            git pull --quiet --rebase -X theirs origin main || git rebase --abort 2>/dev/null || true
+            timeout 900 python3 publish.py --site site --state state/sent.json || echo "publish.py exited $?"
+            git add state
+            if ! git diff --cached --quiet; then
+              git commit --quiet -m "sent state"
+              git pull --quiet --rebase -X theirs origin main || true
+              timeout 120 git push --quiet || echo "state push failed"
+            fi
+            if [ -n "$FORCE_ITEM$STATUS_IDS" ] || [ "$(date +%s)" -ge "$end" ]; then break; fi
+            sleep 300
+          done
+
+      - name: Start the next run
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run publish.yml --repo "${{ github.repository }}" --ref main

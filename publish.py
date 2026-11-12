@@ -468,7 +468,14 @@ def main() -> int:
     ap.add_argument("--state", type=Path, default=Path("state/sent.json"))
     args = ap.parse_args()
     load_secrets()
-    if os.environ.get("STATUS_IDS"):
+    ids = os.environ.get("STATUS_IDS", "")
+    if ids.startswith("send:"):  # diagnostic "send:<item>:<account>": deliver one item to another account's inbox
+        _, iid, acc = ids.split(":")
+        it = next(i for i in load_items(args.site) if i["id"] == iid)
+        pages = os.environ.get("PAGES_URL") or secret("PAGES_URL")
+        print(f"TEST {iid} -> {acc}: {tiktok_send(it, tiktok_access_token(acc), media_urls(it, pages))}")
+        return 0
+    if ids:
         status_report(os.environ["STATUS_IDS"])
         return 0
 

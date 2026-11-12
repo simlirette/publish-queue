@@ -1,0 +1,75 @@
+{
+  "accounts": {
+    "fashion": {
+      "display_name": "the blueprint mag",
+      "open_id": "-00042RRj1iMZwKxf-oWK2ImGb8j_LCj1SQS"
+    },
+    "running": {
+      "display_name": "running shadows",
+      "open_id": "-000VaQHDI7OjSPW8ae4jF_ovPLH_WZG1Npk"
+    }
+  },
+  "checked": "2026-11-12T21:37:53+00:00",
+  "sends": {
+    "fashion-0001:tiktok": {
+      "data": null,
+      "error": {
+        "code": "invalid_params",
+        "log_id": "202611130537569DC2D76BC438F9EC93F6",
+        "message": "token_not_authorized_for_specified_publish_id"
+      },
+      "sent": "2026-11-11T22:59:13+00:00"
+    },
+    "fashion-0010:tiktok": {
+      "data": null,
+      "error": {
+        "code": "invalid_params",
+        "log_id": "20261113053756A949613FC626CCE01609",
+        "message": "token_not_authorized_for_specified_publish_id"
+      },
+      "sent": "2026-11-11T22:59:13+00:00"
+    },
+    "fashion-0036:tiktok": {
+      "data": {
+        "status": "SEND_TO_USER_INBOX"
+      },
+      "error": {
+        "code": "ok",
+        "log_id": "20261113053757A0EA8DB6DDCE93EC1431",
+        "message": ""
+      },
+      "sent": "2026-11-12T16:22:50+00:00"
+    },
+    "fashion-0038:tiktok": {
+      "data": {
+        "status": "SEND_TO_USER_INBOX"
+      },
+      "error": {
+        "code": "ok",
+        "log_id": "2026111305375756C6358A1AA10B101144",
+        "message": ""
+      },
+      "sent": "2026-11-12T16:27:31+00:00"
+    },
+    "fashion-v0005:tiktok": {
+      "data": null,
+      "error": {
+        "code": "invalid_params",
+        "log_id": "2026111305375828795A0D99273BE375B2",
+        "message": "token_not_authorized_for_specified_publish_id"
+      },
+      "sent": "2026-11-12T03:46:22+00:00"
+    },
+    "fashion-v0018:tiktok": {
+      "data": {
+        "status": "SEND_TO_USER_INBOX"
+      },
+      "error": {
+        "code": "ok",
+        "log_id": "202611130537587B5F7E83F58D32E8A89F",
+        "message": ""
+      },
+      "sent": "2026-11-12T20:52:16+00:00"
+    }
+  }
+}

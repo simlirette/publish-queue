@@ -9,13 +9,13 @@
       "open_id": "-000VaQHDI7OjSPW8ae4jF_ovPLH_WZG1Npk"
     }
   },
-  "checked": "2026-11-12T21:37:53+00:00",
+  "checked": "2026-11-12T21:53:13+00:00",
   "sends": {
     "fashion-0001:tiktok": {
       "data": null,
       "error": {
         "code": "invalid_params",
-        "log_id": "202611130537569DC2D76BC438F9EC93F6",
+        "log_id": "202611130553151B3456CE0111AAE49AA3",
         "message": "token_not_authorized_for_specified_publish_id"
       },
       "sent": "2026-11-11T22:59:13+00:00"
@@ -24,7 +24,7 @@
       "data": null,
       "error": {
         "code": "invalid_params",
-        "log_id": "20261113053756A949613FC626CCE01609",
+        "log_id": "20261113055315BAE848DE2B4F83E7E1C7",
         "message": "token_not_authorized_for_specified_publish_id"
       },
       "sent": "2026-11-11T22:59:13+00:00"
@@ -35,10 +35,21 @@
       },
       "error": {
         "code": "ok",
-        "log_id": "20261113053757A0EA8DB6DDCE93EC1431",
+        "log_id": "202611130553166D5FB3631ECE3DE998F1",
         "message": ""
       },
       "sent": "2026-11-12T16:22:50+00:00"
+    },
+    "fashion-0037:tiktok": {
+      "data": {
+        "status": "SEND_TO_USER_INBOX"
+      },
+      "error": {
+        "code": "ok",
+        "log_id": "202611130553160323B9AFA56DE2E6302A",
+        "message": ""
+      },
+      "sent": "2026-11-12T21:43:01+00:00"
     },
     "fashion-0038:tiktok": {
       "data": {
@@ -46,7 +57,7 @@
       },
       "error": {
         "code": "ok",
-        "log_id": "2026111305375756C6358A1AA10B101144",
+        "log_id": "20261113055316454238B19C2759E8BF30",
         "message": ""
       },
       "sent": "2026-11-12T16:27:31+00:00"
@@ -55,7 +66,7 @@
       "data": null,
       "error": {
         "code": "invalid_params",
-        "log_id": "2026111305375828795A0D99273BE375B2",
+        "log_id": "202611130553178EBD1CCFCFD3D7D54252",
         "message": "token_not_authorized_for_specified_publish_id"
       },
       "sent": "2026-11-12T03:46:22+00:00"
@@ -66,7 +77,7 @@
       },
       "error": {
         "code": "ok",
-        "log_id": "202611130537587B5F7E83F58D32E8A89F",
+        "log_id": "202611130553176FA17E639CAC17E2C782",
         "message": ""
       },
       "sent": "2026-11-12T20:52:16+00:00"

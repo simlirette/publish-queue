@@ -7,6 +7,9 @@ on:
     - cron: "7,37 * * * *"
   workflow_dispatch:
     inputs:
+      status_ids:
+        description: "Diagnostic: comma-separated TikTok publish ids to look up (sends nothing)"
+        required: false
       item:
         description: "Send this item id now, ignoring its slot (e.g. fashion-0034)"
         required: false
@@ -40,6 +43,7 @@ jobs:
           REPO: ${{ github.repository }}
           PAGES_URL: ${{ vars.PAGES_URL }}
           FORCE_ITEM: ${{ github.event.inputs.item }}
+          STATUS_IDS: ${{ github.event.inputs.status_ids }}
         run: python3 publish.py --site site --state state/sent.json
 
       - name: Save what was sent

@@ -446,12 +446,27 @@ def message(item: dict, platform: str) -> str:
     return f"{item['id']} is in your TikTok inbox. Open TikTok, pick a sound and post it.{hint}"
 
 
+def status_report(ids: str, account: str = "fashion") -> None:
+    """Diagnostic: print TikTok's current status of publish ids (no secrets printed)."""
+    token = tiktok_access_token(account)
+    for pid in ids.split(","):
+        _, s = http("POST", f"{TIKTOK}/v2/post/publish/status/fetch/", {"publish_id": pid.strip()},
+                    headers={"Authorization": f"Bearer {token}"})
+        print(f"status {pid.strip()[-8:]}: {json.dumps(s, ensure_ascii=False)}")
+    _, u = http("GET", f"{TIKTOK}/v2/user/info/?fields=open_id,display_name", None,
+                headers={"Authorization": f"Bearer {token}"})
+    print(f"account {account}: {json.dumps(u, ensure_ascii=False)}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--site", type=Path, default=Path("site"))
     ap.add_argument("--state", type=Path, default=Path("state/sent.json"))
     args = ap.parse_args()
     load_secrets()
+    if os.environ.get("STATUS_IDS"):
+        status_report(os.environ["STATUS_IDS"])
+        return 0
 
     now = datetime.now(timezone.utc)
     stamp = now.isoformat(timespec="seconds")

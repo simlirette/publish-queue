@@ -33,6 +33,7 @@ jobs:
           path: site
 
       - name: Send due posts
+        timeout-minutes: 15
         env:
           # every repo secret, so a new account only needs its secrets (see publish.py)
           SECRETS_JSON: ${{ toJSON(secrets) }}
@@ -43,8 +44,11 @@ jobs:
 
       - name: Save what was sent
         if: always()
+        timeout-minutes: 5  # a hang here loses the state and re-sends posts (seen 2026-11-11)
+        env:
+          GIT_TERMINAL_PROMPT: "0"
         run: |
           git config user.name "publish-bot"
           git config user.email "publish-bot@users.noreply.github.com"
           git add state
-          git diff --cached --quiet || { git commit -m "sent state" && git push; }
+          git diff --cached --quiet || { git commit -m "sent state" && { git pull --rebase -X theirs origin main || true; timeout 120 git push; }; }

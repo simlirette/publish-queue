@@ -448,6 +448,45 @@ def message(item: dict, platform: str) -> str:
     return f"{item['id']} is in your TikTok inbox. Open TikTok, pick a sound and post it.{hint}"
 
 
+def inbox_check(path: Path, sent: dict, now: datetime, tokens: dict) -> None:
+    """Record TikTok's current view of recent inbox sends, plus which account each token is.
+
+    SEND_TO_USER_INBOX only says TikTok accepted the upload; this re-asks later so a draft that never
+    shows up in the app can be told apart from one that TikTok failed after we stopped polling.
+    """
+    try:
+        last = datetime.fromisoformat(json.loads(path.read_text(encoding="utf-8"))["checked"])
+        if now - last < timedelta(minutes=15):
+            return
+    except (OSError, ValueError, KeyError):
+        pass
+    report: dict = {"checked": now.isoformat(timespec="seconds"), "accounts": {}, "sends": {}}
+    recent = {}
+    for k, v in sent.items():
+        parts = str(v.get("status", "")).split()
+        if k.endswith(":tiktok") and len(parts) == 2 and "inbox" in parts[1]:
+            at = datetime.fromisoformat(v["at"])
+            if now - at <= timedelta(hours=24):
+                recent[k] = (parts[1], v["at"])
+    for acc in tiktok_accounts():
+        try:
+            if ("tiktok", acc) not in tokens:
+                tokens[("tiktok", acc)] = tiktok_access_token(acc)
+            _, u = http("GET", f"{TIKTOK}/v2/user/info/?fields=open_id,display_name", None,
+                        headers={"Authorization": f"Bearer {tokens[('tiktok', acc)]}"})
+            report["accounts"][acc] = (u.get("data") or {}).get("user") or u.get("error")
+        except (Retry, Failed) as exc:
+            report["accounts"][acc] = f"token error: {exc}"
+    fashion = tokens.get(("tiktok", "fashion"))
+    for k, (pid, at) in recent.items():
+        if not fashion or not k.startswith("fashion"):
+            continue
+        _, s = http("POST", f"{TIKTOK}/v2/post/publish/status/fetch/", {"publish_id": pid},
+                    headers={"Authorization": f"Bearer {fashion}"})
+        report["sends"][k] = {"sent": at, "data": s.get("data"), "error": s.get("error")}
+    path.write_text(json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
 def status_report(ids: str, account: str = "fashion") -> None:
     """Diagnostic: print TikTok's current status of publish ids (no secrets printed)."""
     token = tiktok_access_token(account)
@@ -522,6 +561,10 @@ def main() -> int:
 
     for note in collect_stats(args.state.parent / "analytics", now, tokens):
         print(note)
+    try:
+        inbox_check(args.state.parent / "inbox_check.json", sent, now, tokens)
+    except Exception as exc:  # diagnostics must never stop a send
+        print(f"inbox check failed: {exc}")
 
     args.state.parent.mkdir(parents=True, exist_ok=True)
     args.state.write_text(json.dumps(trim_state(sent, now), indent=2, sort_keys=True) + "\n", encoding="utf-8")

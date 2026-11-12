@@ -45,6 +45,10 @@ TIKTOK = "https://open.tiktokapis.com"
 INSTAGRAM = "https://graph.instagram.com"
 IG_VERSION = "v25.0"
 LATE_HOURS = 12  # a slot missed by more than this is skipped, not sent late
+# TikTok shows inbox drafts for @theblueprint.mag ~3h20m after accepting them (2026-11-12, while the same
+# app's drafts reach @running_shadows within minutes), so drafts go out this long before their slot and
+# wait in the inbox. Instagram publishes directly, so it keeps the exact slot.
+TIKTOK_LEAD = timedelta(hours=4)
 TIKTOK_WAIT_S = 90
 IG_WAIT_S = 300  # Reels can take a few minutes to process
 INIT_GAP_S = 11  # TikTok allows six init requests per minute per token
@@ -113,7 +117,7 @@ def due_items(items: list[dict], sent: dict, now: datetime, force: str | None = 
                     due.append((it, platform))
                 continue
             slot = slot_of(it)
-            if slot > now:
+            if slot - (TIKTOK_LEAD if platform == "tiktok" else timedelta(0)) > now:
                 continue
             (late if now - slot > timedelta(hours=LATE_HOURS) else due).append((it, platform))
     due.sort(key=lambda pair: slot_of(pair[0]))
@@ -445,7 +449,13 @@ def message(item: dict, platform: str) -> str:
     if platform == "instagram":
         return f"{item['id']} is live on Instagram."
     hint = f"\nSuggested sound: {item['sound_hint']}" if item.get("sound_hint") else ""
-    return f"{item['id']} is in your TikTok inbox. Open TikTok, pick a sound and post it.{hint}"
+    left = slot_of(item) - datetime.now(timezone.utc)
+    if left > timedelta(minutes=5):
+        h, m = divmod(int(left.total_seconds()) // 60, 60)
+        when = f"Post it in {h} h {m:02d} min (TikTok can take ~3 h to show the draft)."
+    else:
+        when = "Post it now."
+    return f"{item['id']} sent to your TikTok inbox. {when} Pick a sound when you post.{hint}"
 
 
 def inbox_check(path: Path, sent: dict, now: datetime, tokens: dict) -> None:

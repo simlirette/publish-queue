@@ -453,9 +453,11 @@ def status_report(ids: str, account: str = "fashion") -> None:
         _, s = http("POST", f"{TIKTOK}/v2/post/publish/status/fetch/", {"publish_id": pid.strip()},
                     headers={"Authorization": f"Bearer {token}"})
         print(f"status {pid.strip()[-8:]}: {json.dumps(s, ensure_ascii=False)}")
-    _, u = http("GET", f"{TIKTOK}/v2/user/info/?fields=open_id,display_name", None,
-                headers={"Authorization": f"Bearer {token}"})
-    print(f"account {account}: {json.dumps(u, ensure_ascii=False)}")
+    for acc in tiktok_accounts():
+        tok = tiktok_access_token(acc)
+        _, u = http("GET", f"{TIKTOK}/v2/user/info/?fields=open_id,display_name", None,
+                    headers={"Authorization": f"Bearer {tok}"})
+        print(f"account {acc}: {json.dumps(u, ensure_ascii=False)}")
 
 
 def main() -> int:

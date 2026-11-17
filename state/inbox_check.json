@@ -9,7 +9,7 @@
       "open_id": "-000VaQHDI7OjSPW8ae4jF_ovPLH_WZG1Npk"
     }
   },
-  "checked": "2026-11-17T16:52:59+00:00",
+  "checked": "2026-11-17T17:08:04+00:00",
   "sends": {
     "fashion-0052:tiktok": {
       "data": {
@@ -20,7 +20,7 @@
       },
       "error": {
         "code": "ok",
-        "log_id": "20261118005301735B10CD965BD07B3FCE",
+        "log_id": "202611180108078E4B8F0DD2A37415970A",
         "message": ""
       },
       "sent": "2026-11-16T18:32:23+00:00"

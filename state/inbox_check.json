@@ -9,7 +9,7 @@
       "open_id": "-000VaQHDI7OjSPW8ae4jF_ovPLH_WZG1Npk"
     }
   },
-  "checked": "2026-11-26T18:15:43+00:00",
+  "checked": "2026-11-26T18:30:49+00:00",
   "sends": {
     "fashion-0053:tiktok": {
       "data": {
@@ -17,10 +17,21 @@
       },
       "error": {
         "code": "ok",
-        "log_id": "2026112702154561F988DBE89796BFD36E",
+        "log_id": "20261127023059D1C396094110443FB402",
         "message": ""
       },
       "sent": "2026-11-25T18:33:17+00:00"
+    },
+    "fashion-0055:tiktok": {
+      "data": {
+        "status": "SEND_TO_USER_INBOX"
+      },
+      "error": {
+        "code": "ok",
+        "log_id": "202611270231008AEAC20BA78765956CAA",
+        "message": ""
+      },
+      "sent": "2026-11-26T18:30:49+00:00"
     },
     "fashion-0068:tiktok": {
       "data": {
@@ -28,7 +39,7 @@
       },
       "error": {
         "code": "ok",
-        "log_id": "2026112702154609A464EE9F1EDFAE1178",
+        "log_id": "20261127023059A81A5FC3D168F740BC11",
         "message": ""
       },
       "sent": "2026-11-26T10:31:29+00:00"
@@ -39,7 +50,7 @@
       },
       "error": {
         "code": "ok",
-        "log_id": "20261127021546AD9FA5EC33FA90332936",
+        "log_id": "202611270231006153D5FB7BAE83CFC898",
         "message": ""
       },
       "sent": "2026-11-26T14:33:35+00:00"

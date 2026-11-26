@@ -1,48 +1,11 @@
 {
   "accounts": {
-    "fashion": {
-      "display_name": "the blueprint mag",
-      "open_id": "-00042RRj1iMZwKxf-oWK2ImGb8j_LCj1SQS"
-    },
+    "fashion": "token error: TikTok token refresh failed for fashion: None None",
     "running": {
       "display_name": "running shadows",
       "open_id": "-000VaQHDI7OjSPW8ae4jF_ovPLH_WZG1Npk"
     }
   },
-  "checked": "2026-11-26T05:54:10+00:00",
-  "sends": {
-    "fashion-0053:tiktok": {
-      "data": {
-        "status": "SEND_TO_USER_INBOX"
-      },
-      "error": {
-        "code": "ok",
-        "log_id": "2026112613541287F020FF6DC1B7967B12",
-        "message": ""
-      },
-      "sent": "2026-11-25T18:33:17+00:00"
-    },
-    "fashion-0067:tiktok": {
-      "data": {
-        "status": "SEND_TO_USER_INBOX"
-      },
-      "error": {
-        "code": "ok",
-        "log_id": "20261126135413D9B4BC343DD9CA960048",
-        "message": ""
-      },
-      "sent": "2026-11-25T10:33:39+00:00"
-    },
-    "fashion-v0024:tiktok": {
-      "data": {
-        "status": "SEND_TO_USER_INBOX"
-      },
-      "error": {
-        "code": "ok",
-        "log_id": "2026112613541387F020FF6DC1B7967B20",
-        "message": ""
-      },
-      "sent": "2026-11-25T14:30:40+00:00"
-    }
-  }
+  "checked": "2026-11-26T06:09:17+00:00",
+  "sends": {}
 }
